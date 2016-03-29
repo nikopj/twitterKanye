@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script>
+
+      $.getJSON("http://cooper-union-search-proxy.herokuapp.com/twitter/search/kanye?count=100", function(response){
+
+
+
+        for(var i=0; i<100; i++){
+          var normal_image_url = response.statuses[i].user.profile_image_url;
+          var index = normal_image_url.indexOf("normal")
+          var extension = normal_image_url.substring(normal_image_url.indexOf("al.")+3, normal_image_url.length);
+          var bigger_image_url = normal_image_url.substring(0, index)+"bigger."+extension;
+          $("#tweets").append("<img"+" src='" + bigger_image_url + "'/>");
+          $("img").addClass("dp");
+        }
+
+        console.log(response.statuses[0].user);
+
+      });
+
+      $.getJSON("http://cooper-union-search-proxy.herokuapp.com/twitter/search/'i miss the old kanye'?count=10", function(response){
+          $(".miss").append("<h2>@"+response.statuses[0].user.name+" misses the old Kanye</h2>");
+      });
+
+
+    </script>
+    <style>
+
+      body{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+
+      h1{
+        position: absolute;
+        z-index: 2;
+        text-transform: uppercase;
+        color: red;
+        font-size: 100px;
+        mix-blend-mode: difference;
+        opacity: 0.8;
+        top:50px;
+        width: 833px;
+        margin:0;
+        text-align: center;
+        padding:0;
+        letter-spacing: 5px;
+      }
+
+      .container{
+        background-image: url(imgs/kanyeIce.jpg);
+        background-size: cover;
+        width: 833px;
+        height: 550px;
+        margin: 50px;
+      }
+
+      #tweets{
+        display: flex;
+        flex-direction: row;
+        background-color: transparent;
+        background-size: cover;
+        flex-wrap: wrap;
+        padding: 10px;
+        z-index: 1;
+      }
+
+      .dp{
+        opacity: 0.7;
+        mix-blend-mode: overlay;
+      }
+
+      .miss{
+        display: flex;
+        flex-direction: row;
+      }
+
+      h2{
+        font-size: 20px;
+      }
+
+
+
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Kanye West</h1>
+      <div id="tweets"></div>
+    </div>
+    <div class="miss">
+    </div>
+  </body>
+</html>
